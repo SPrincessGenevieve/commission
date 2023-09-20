@@ -16,7 +16,9 @@ import axios from "axios";
 function TableComponent() {
   const [data, setData] = useState([]);
   const [editable, setEditable] = useState({});
-  const [editedData, setEditedData] = useState({}); // Store edited data locally
+  const initialEditedData = {}; // Initialize editedData as an empty object
+
+  const [editedData, setEditedData] = useState(initialEditedData);
 
   useEffect(() => {
     fetchData();
