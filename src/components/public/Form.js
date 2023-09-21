@@ -30,7 +30,6 @@ function Form(props) {
       const response = await axios.post("http://localhost:8000/api/tasks/", formData);
       console.log("Response from Django API:", response.data);
       setFormData({
-        ID: "",
         NAME: "",
         DATE: "",
         DUE: "",
@@ -62,13 +61,6 @@ function Form(props) {
           style={{ flexDirection: "column", display: "flex", width: "20rem" }}
           onSubmit={handleSubmit}
         >
-          <input
-            type="text"
-            name="ID"
-            value={formData.ID}
-            placeholder="ID"
-            onChange={handleInputChange}
-          />
           <input
             type="text"
             name="NAME"

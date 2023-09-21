@@ -32,7 +32,13 @@ function About(props) {
       <Navbar></Navbar>
       <div className="about-container">
         <h1>ABOUT US</h1>
-
+        <select onChange={handleIdChange} value={selectedId}>
+          {data.map((item) => (
+            <option key={item.id} value={item.id}>
+              ID {item.id}
+            </option>
+          ))}
+        </select>
         {selectedData && (
           <div>
             <p>{selectedData.description}</p>
