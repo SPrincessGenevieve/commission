@@ -8,10 +8,11 @@ function Add({ updateSelectedImageData }) {
     <div>
       <Navbar></Navbar>
       <div className="list-container">
-        <h3>Add Employee List</h3>
-      </div>
-      <div style={{ height: 20, width: 20 }}>
-        <GalleryContainer></GalleryContainer>
+        <div className="list-subcontainer">
+          <div style={{ marginTop: "-5%" }}>
+            <GalleryContainer></GalleryContainer>
+          </div>
+        </div>
       </div>
     </div>
   );

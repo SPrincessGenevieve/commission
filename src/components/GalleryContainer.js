@@ -3,6 +3,7 @@ import axios from "axios";
 import { Button } from "@mui/material";
 import GalleryDis from "./public/GalleryDis";
 import ImageDisplay from "./public/ImageDisplay";
+import { Edit, Image, Upload } from "@mui/icons-material";
 
 function GalleryContainer({
   updateSelectedImageData,
@@ -118,10 +119,17 @@ function GalleryContainer({
       {showButtons && (
         <>
           <Button
-            style={{ backgroundColor: "red" }}
+            style={{
+              outline: "none",
+              border: "none",
+              backgroundColor: "transparent",
+              alignItems: "center",
+              display: "flex",
+              color: "#ad6c6b",
+            }}
             onClick={() => fileInputRef.current.click()}
           >
-            Upload Image
+            <Image style={{ fontSize: 35 }}></Image> <h1>Upload Image</h1>
           </Button>
 
           <input

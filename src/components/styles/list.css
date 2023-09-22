@@ -2,9 +2,9 @@
   background-color: #ffe1e1;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 190vh;
 }
 
 .list-subcontainer {
-  margin-top: 5rem;
+  margin-top: 12rem;
 }
