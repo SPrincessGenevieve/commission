@@ -1,119 +1,115 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Button } from "@mui/material";
 import GalleryDis from "./public/GalleryDis";
-import Gallery from "./public/Gallery";
-import { useDropzone } from "react-dropzone";
 
 function GalleryContainer({ updateSelectedImageData, showButtons = true }) {
-  const [images, setImages] = useState([]);
-  const [selectedImageIds, setSelectedImageIds] = useState([]);
-  const [selectedImageData, setSelectedImageData] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const fileInputRef = useRef();
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/pictures/tasks/").then((response) => {
-      setImages(response.data);
-    });
+    // Try to fetch the selected image from localStorage
+    const storedImage = localStorage.getItem("selectedImage");
 
-    const storedImageIds = JSON.parse(localStorage.getItem("selectedImageIds"));
-    if (storedImageIds) {
-      setSelectedImageIds(storedImageIds);
+    if (storedImage) {
+      // If there's a stored image, parse it and set it as the selected image
+      setSelectedImage(JSON.parse(storedImage));
+    } else {
+      // If no stored image, fetch the selected image from your Django backend
+      fetchData();
     }
   }, []);
 
-  useEffect(() => {
-    if (selectedImageIds.length > 0) {
-      Promise.all(
-        selectedImageIds.map((id) =>
-          axios.get(`http://localhost:8000/api/pictures/tasks/${id}/`)
-        )
-      )
-        .then((responses) => {
-          const imageData = responses.map((response) => response.data);
-          setSelectedImageData(imageData);
-        })
-        .catch((error) => {
-          console.error("Error fetching selected image data:", error);
-        });
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8000/api/selected/image/tasks/"
+      );
+      const selectedImageData = response.data;
+
+      // Update the selected image
+      setSelectedImage(selectedImageData);
+
+      // Store the selected image data in localStorage
+      localStorage.setItem("selectedImage", JSON.stringify(selectedImageData));
+    } catch (error) {
+      console.error("Error fetching selected image:", error);
     }
-  }, [selectedImageIds]);
+  };
 
-  const onDrop = (acceptedFiles) => {
-    const formDataArray = acceptedFiles.map((selectedImage) => {
-      const formData = new FormData();
-      formData.append("image", selectedImage);
-      return formData;
-    });
+  const handleImageUpload = async (e) => {
+    const selectedImage = e.target.files[0];
+    if (!selectedImage) {
+      alert("Please select an image to upload.");
+      return;
+    }
 
-    Promise.all(
-      formDataArray.map((formData) =>
-        axios.post("http://localhost:8000/api/upload/image/tasks/", formData, {
+    const formData = new FormData();
+    formData.append("image", selectedImage);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/upload/image/tasks/",
+        formData,
+        {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        })
-      )
-    )
-      .then((responses) => {
-        console.log(
-          "Uploaded images:",
-          responses.map((response) => response.data)
-        );
-
-        const newImageIds = responses.map((response) => response.data.id);
-        const updatedSelectedImageIds = [...selectedImageIds, ...newImageIds];
-        setSelectedImageIds(updatedSelectedImageIds);
-        localStorage.setItem(
-          "selectedImageIds",
-          JSON.stringify(updatedSelectedImageIds)
-        );
-
-        if (
-          updateSelectedImageData &&
-          typeof updateSelectedImageData === "function"
-        ) {
-          const updatedImageData = [
-            ...selectedImageData,
-            ...responses.map((response) => response.data),
-          ];
-          setSelectedImageData(updatedImageData);
-          updateSelectedImageData(updatedImageData);
         }
-      })
-      .catch((error) => {
-        console.error("Error uploading images:", error);
-      });
-  };
+      );
 
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-    accept: "image/*",
-    multiple: true,
-  });
+      console.log(response.data.message);
+
+      // Update the selected image
+      setSelectedImage(response.data);
+
+      // Store the selected image data in localStorage
+      localStorage.setItem("selectedImage", JSON.stringify(response.data));
+
+      if (
+        updateSelectedImageData &&
+        typeof updateSelectedImageData === "function"
+      ) {
+        updateSelectedImageData(response.data);
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
 
   return (
     <div>
       {showButtons && (
-        <div>
-          {/* Custom button for uploading images */}
-          <div {...getRootProps()} style={{ display: "inline-block" }}>
-            <input {...getInputProps()} style={{ display: "none" }} />
-            <Button style={{ backgroundColor: "red" }} onClick={() => {}}>
-              Upload Images
-            </Button>
-          </div>
+        <>
+          <Button
+            style={{ backgroundColor: "red" }}
+            onClick={() => fileInputRef.current.click()}
+          >
+            Upload Image
+          </Button>
+
+          <input
+            type="file"
+            ref={fileInputRef}
+            style={{ display: "none" }}
+            onChange={handleImageUpload}
+            accept="image/*"
+          />
+        </>
+      )}
+
+      {/* Display the selected image */}
+      {selectedImage && (
+        <div style={{ height: 300, width: 300 }}>
+          <GalleryDis
+            style={{ height: 300, width: 300 }}
+            selectedImageId={selectedImage.id}
+            selectedImageData={selectedImage}
+            imageUrl={selectedImage.imageUrl}
+          />
         </div>
       )}
-      <div>
-        {selectedImageData.map((imageData) => (
-          <div key={imageData.id} style={{ margin: "10px" }}>
-            <GalleryDis
-              selectedImageId={imageData.id}
-              selectedImageData={imageData}
-            />
-          </div>
-        ))}
-      </div>
     </div>
   );
 }

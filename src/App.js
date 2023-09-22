@@ -15,7 +15,7 @@ function App() {
   return (
     <div className="container">
       <Routes>
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
       </Routes>
 
       <Routes>
@@ -23,7 +23,7 @@ function App() {
         <Route path="/list" element={<List />} />
         <Route path="/add" element={<Add />} />
         <Route path="/update" element={<Update />} />
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/form" element={<Form />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/about" element={<About />} />

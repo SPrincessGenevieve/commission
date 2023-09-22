@@ -5,32 +5,32 @@ import { Button } from "@mui/material";
 import axios from "axios";
 import ImageDisplay from "./ImageDisplay";
 
-// ... (other code)
-
 function GalleryDis({ selectedImageId, selectedImageData, style }) {
   const [images, setImages] = useState([]); // State to store the list of images
 
   useEffect(() => {
-    // Fetch all images from your Django backend
-    axios.get("http://localhost:8000/api/pictures/tasks/").then((response) => {
-      setImages(response.data);
-    });
+    // Generate a random query parameter
+    const randomQueryParam = `?nocache=${Math.random()}`;
+
+    // Fetch all images from your Django backend with the random query parameter
+    axios
+      .get(`http://localhost:8000/api/pictures/tasks/${randomQueryParam}`)
+      .then((response) => {
+        setImages(response.data);
+      });
   }, []);
 
   return (
-    <div>
-      <div className="gallery-container">
+    <>
+      {selectedImageId && selectedImageData ? (
         <div>
-          {selectedImageId && selectedImageData ? (
-            <div>
-              <img style={style} src={selectedImageData.image} alt="Selected" />
-            </div>
-          ) : (
-            <p>No image selected.</p>
-          )}
+          <img style={style} src={selectedImageData.image} alt="Selected" />
         </div>
-      </div>
-    </div>
+      ) : (
+        <p>No image selected.</p>
+      )}
+    </>
   );
 }
+
 export default GalleryDis;
