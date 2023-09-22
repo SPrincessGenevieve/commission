@@ -1,3 +1,13 @@
 .gallery-container {
-  margin-top: 10rem;
+  background-color: #ffe1e1;
+  height: 200vh;
+  display: flex;
+}
+
+.welcome {
+  font-family: "Fuggles-Regular";
+}
+
+.gallery-subcontainer {
+  margin-top: 12rem;
 }

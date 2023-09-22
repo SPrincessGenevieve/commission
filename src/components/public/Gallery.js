@@ -4,6 +4,7 @@ import Navbar from "../../NavbarPublic";
 import "./styles/gallery.css";
 import ImageDisplay from "./ImageDisplay";
 import GalleryContainer from "../GalleryContainer";
+import "./../../components/font.css";
 
 function Gallery() {
   const [images, setImages] = useState([]);
@@ -21,11 +22,14 @@ function Gallery() {
 
   return (
     <div>
+      <Navbar />
       <div className="gallery-container">
-        <Navbar />
-        <h1>GALLERY</h1>
-        <GalleryContainer images={images} showButtons={false} />{" "}
-        {/* Pass showButtons prop */}
+        <div className="gallery-subcontainer">
+          <h1 className="welcome">Welcome to the Gallery</h1>
+          <div style={{ marginTop: "-8rem" }}>
+            <GalleryContainer images={images} showButtons={false} />{" "}
+          </div>
+        </div>
       </div>
     </div>
   );

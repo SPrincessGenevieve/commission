@@ -19,12 +19,12 @@ function Navbar(props) {
         <div className="bar"></div>
       </div>
       <ul className={`nav-list ${showNav ? "show" : ""}`}>
-        <CustomLink to="/list">List</CustomLink>
-        <CustomLink to="/add">Add</CustomLink>
-        <CustomLink to="/update">Update</CustomLink>
+        <CustomLink to="/list">TABLE</CustomLink>
+        <CustomLink to="/add">GALLERY</CustomLink>
+        <CustomLink to="/update">ABOUT</CustomLink>
         <li className={`nav-item logout-item ${showNav ? "show" : ""}`}>
           <CustomLink className="logout-link" to="/">
-            Logout
+            LOGOUT
           </CustomLink>
         </li>
       </ul>

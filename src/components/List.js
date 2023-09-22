@@ -8,8 +8,12 @@ export default function List(props) {
     <div>
       <Navbar></Navbar>
       <div className="list-container">
-        <h3>Employee List</h3>
-        <TableComponent></TableComponent>
+        <div className="list-subcontainer">
+          <h3 style={{ marginLeft: 10, color: "#AD6C6B" }}>
+            CLIENT INFORMATION
+          </h3>
+          <TableComponent></TableComponent>
+        </div>
       </div>
     </div>
   );

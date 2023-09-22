@@ -21,12 +21,12 @@ function Navbar(props) {
       <ul className={`nav-list ${showNav ? "show" : ""}`}>
         <li className={`nav-item logout-item ${showNav ? "show" : ""}`}>
           <CustomLink className="logout-link" to="/">
-            Home
+            HOME
           </CustomLink>
         </li>
-        <CustomLink to="/gallery">Gallery</CustomLink>
-        <CustomLink to="/about">About us</CustomLink>
-        <CustomLink to="/login">Login</CustomLink>
+        <CustomLink to="/gallery">GALLERY</CustomLink>
+        <CustomLink to="/about">ABOUT US</CustomLink>
+        <CustomLink to="/login">LOGIN</CustomLink>
       </ul>
     </nav>
   );

@@ -23,7 +23,15 @@ function GalleryDis({ selectedImageId, selectedImageData, style }) {
   return (
     <>
       {selectedImageId && selectedImageData ? (
-        <div>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "-10%",
+          }}
+        >
           <img style={style} src={selectedImageData.image} alt="Selected" />
         </div>
       ) : (

@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import Navbar from "../../NavbarPublic";
 import "./styles/form.css";
 import axios from "axios";
+import { Button } from "@mui/material";
+import InputText from "../InputText";
+import ButtonComponent from "../ButtonComponent";
+import cloud from "./../../assets/cloud.png";
+import InputSelect from "../InputSelect";
 
 function Form(props) {
   // Create state variables to hold form data
@@ -27,7 +32,10 @@ function Form(props) {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8000/api/tasks/", formData);
+      const response = await axios.post(
+        "http://localhost:8000/api/tasks/",
+        formData
+      );
       console.log("Response from Django API:", response.data);
       setFormData({
         NAME: "",
@@ -56,64 +64,86 @@ function Form(props) {
     <div>
       <Navbar />
       <div className="form-container">
-        <h1>FORM</h1>
-        <form
-          style={{ flexDirection: "column", display: "flex", width: "20rem" }}
-          onSubmit={handleSubmit}
-        >
-          <input
-            type="text"
-            name="NAME"
-            value={formData.NAME}
-            placeholder="Name"
-            onChange={handleInputChange}
-          />
-          <input
-            type="date"
-            name="DATE"
-            value={formData.DATE}
-            placeholder="Date"
-            onChange={handleInputChange}
-          />
-          <input
-            type="date"
-            name="DUE"
-            value={formData.DUE}
-            placeholder="Due Date"
-            onChange={handleInputChange}
-          />
-          <input
-            type="number"
-            name="FEE"
-            value={formData.FEE}
-            placeholder="Fee"
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="CONTACT_NO"
-            value={formData.CONTACT_NO}
-            placeholder="Contact No."
-            onChange={handleInputChange}
-          />
-          <input
-            type="email"
-            name="EMAIL"
-            value={formData.EMAIL}
-            placeholder="Email"
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="STATUS"
-            value={formData.STATUS}
-            placeholder="Status"
-            onChange={handleInputChange}
-          />
-          <button onClick={handleSubmit} type="submit">
-            SUBMIT
-          </button>
-        </form>
+        <div className="form-subcontainer">
+          <div className="white-container">
+            <div className="white-subcontainer">
+              <div className="input-container">
+                <div className="input-boxes">
+                  <InputText
+                    label={"NAME"}
+                    marginRight={50}
+                    type="text"
+                    name="NAME"
+                    value={formData.NAME}
+                    onChange={handleInputChange}
+                  ></InputText>
+                  <InputText
+                    label={"DATE"}
+                    type="date"
+                    name="DATE"
+                    value={formData.DATE}
+                    onChange={handleInputChange}
+                  ></InputText>
+                </div>
+                <div className="input-boxes">
+                  <InputText
+                    label={"DUE DATE"}
+                    marginRight={50}
+                    type="date"
+                    name="DUE"
+                    value={formData.DUE}
+                    onChange={handleInputChange}
+                  ></InputText>
+                  <InputText
+                    label={"PAYMENT FEE"}
+                    type="number"
+                    name="FEE"
+                    value={formData.FEE}
+                    onChange={handleInputChange}
+                  ></InputText>
+                </div>
+                <div className="input-boxes">
+                  <InputText
+                    label={"CONTACT"}
+                    marginRight={50}
+                    type="number"
+                    name="CONTACT_NO"
+                    value={formData.CONTACT_NO}
+                    onChange={handleInputChange}
+                  ></InputText>
+                  <InputText
+                    label={"EMAIL"}
+                    marginRight={50}
+                    type="email"
+                    name="EMAIL"
+                    value={formData.EMAIL}
+                    onChange={handleInputChange}
+                  ></InputText>
+                </div>
+                <div className="input-boxes">
+                  <InputSelect
+                    label={"STATUS"}
+                    type="select"
+                    marginRight={50}
+                    name="STATUS"
+                    value={formData.STATUS}
+                    onChange={handleInputChange}
+                  ></InputSelect>
+                </div>
+              </div>
+            </div>
+            <div className="buttons-container">
+              <ButtonComponent
+                text="SUBMIT"
+                onClick={handleSubmit}
+                backgroundColor={"#FFECEC"}
+              ></ButtonComponent>
+            </div>
+          </div>
+          <div className="image-cloud">
+            <img src={cloud}></img>
+          </div>
+        </div>
       </div>
     </div>
   );

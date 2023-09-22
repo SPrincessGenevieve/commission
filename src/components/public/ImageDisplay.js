@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function ImageDisplay({ imageId }) {
+function ImageDisplay({ imageId, style }) {
   const [image, setImage] = useState(null);
 
   useEffect(() => {
@@ -20,8 +20,8 @@ function ImageDisplay({ imageId }) {
   return (
     <div>
       {image ? (
-        <div>
-          <img src={image.image} />
+        <div style={{ flexDirection: "row" }}>
+          <img style={style} src={image.image} />
         </div>
       ) : (
         <p>Loading...</p>

@@ -12,12 +12,14 @@
   border: 1px solid red;
   display: flex;
   justify-content: space-between;
+  background-color: white;
 }
 
 .table-cell {
   flex: 1;
   display: flex;
   border-top: 2px solid #fd7b7b;
+  background-color: white;
 }
 
 .table-body-row {

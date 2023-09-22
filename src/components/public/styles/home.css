@@ -1,3 +1,52 @@
 .home-container {
-  margin-top: 10rem;
+  background-color: #ffe1e1;
+  height: 100vh;
+  display: flex;
+}
+.home-subcontainer {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+.book {
+  color: #ad6c6b;
+}
+
+.button-book {
+  width: 20rem;
+  height: 3rem;
+  box-shadow: 1px 6px 6px 1px #9f3131;
+}
+
+.button-container {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  position: absolute;
+  margin-top: 30rem;
+}
+
+.buttons-container {
+  z-index: 1;
+}
+
+.input-container {
+  z-index: 1;
+}
+
+.input-boxes {
+  z-index: 1;
+}
+
+.image-cloud {
+  position: absolute;
+  display: flex;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+img {
+  width: 30%;
 }

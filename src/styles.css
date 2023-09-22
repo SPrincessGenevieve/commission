@@ -3,6 +3,7 @@
   top: 0;
   right: 0;
   width: 100%;
+  z-index: 9999;
 }
 
 .nav ul {
@@ -11,10 +12,6 @@
   height: 70px;
   padding: 0;
   display: flex;
-  background: linear-gradient(
-    rgba(212, 11, 38, 0.144),
-    rgba(216, 207, 255, 0.3)
-  );
   backdrop-filter: blur(10px);
   align-items: left;
   text-align: center;
@@ -33,18 +30,18 @@
 .active a,
 .active a:active {
   color: blue;
-  background-color: white;
   font-weight: bold;
   padding: 20px;
   display: inline-block;
   box-sizing: border-box;
   text-align: center;
   width: 100%;
+  border-bottom: 7px solid #ad6c6b;
 }
 
 .nav-item a {
   text-decoration: none;
-  color: rgb(148, 144, 194);
+  color: #ad6c6b;
   transition: color 0.3s;
   padding: 20px;
   display: inline-block;
@@ -54,7 +51,7 @@
 }
 
 .nav-item a:hover {
-  color: rgb(37, 37, 133);
+  color: #ad6c6b;
   background-color: white;
   text-align: center;
 }
@@ -92,7 +89,7 @@
 
 .nav-item .logout-link {
   display: flex;
-  width: 10rem;
+  width: 18rem;
   justify-content: center;
   text-align: center;
 }

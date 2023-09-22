@@ -2,9 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Button } from "@mui/material";
 import GalleryDis from "./public/GalleryDis";
+import ImageDisplay from "./public/ImageDisplay";
 
-function GalleryContainer({ updateSelectedImageData, showButtons = true }) {
+function GalleryContainer({
+  updateSelectedImageData,
+  showButtons = true,
+  selectedImageId,
+  selectedImageData,
+}) {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [images, setImages] = useState([]);
 
   const fileInputRef = useRef();
 
@@ -19,6 +26,18 @@ function GalleryContainer({ updateSelectedImageData, showButtons = true }) {
       // If no stored image, fetch the selected image from your Django backend
       fetchData();
     }
+  }, []);
+
+  useEffect(() => {
+    // Fetch all images from your Django backend
+    axios
+      .get("http://localhost:8000/api/all/images/tasks/")
+      .then((response) => {
+        setImages(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching images:", error);
+      });
   }, []);
 
   const fetchData = async () => {
@@ -78,6 +97,22 @@ function GalleryContainer({ updateSelectedImageData, showButtons = true }) {
     }
   };
 
+  useEffect(() => {
+    // Fetch all images from your Django backend
+    axios.get("http://localhost:8000/api/pictures/tasks/").then((response) => {
+      setImages(response.data);
+    });
+  }, []);
+
+  // Define a function to group images into rows with a maximum of 5 images per row
+  const groupImagesIntoRows = () => {
+    const rows = [];
+    for (let i = 0; i < images.length; i += 5) {
+      rows.push(images.slice(i, i + 5));
+    }
+    return rows;
+  };
+
   return (
     <div>
       {showButtons && (
@@ -101,15 +136,70 @@ function GalleryContainer({ updateSelectedImageData, showButtons = true }) {
 
       {/* Display the selected image */}
       {selectedImage && (
-        <div style={{ height: 300, width: 300 }}>
+        <div
+          style={{
+            height: 1000,
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+            display: "flex",
+          }}
+        >
           <GalleryDis
-            style={{ height: 300, width: 300 }}
+            style={{
+              width: "40%",
+              display: "flex",
+              borderRadius: 50,
+              marginTop: 170,
+            }}
             selectedImageId={selectedImage.id}
             selectedImageData={selectedImage}
             imageUrl={selectedImage.imageUrl}
           />
         </div>
       )}
+
+      {/* Render ALL IMAGES HERE */}
+      {selectedImageData ? (
+        <div>
+          <h2>Selected Image</h2>
+          <ImageDisplay imageId={selectedImageId} />
+        </div>
+      ) : null}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+        }}
+      >
+        {groupImagesIntoRows().map((row, rowIndex) => (
+          <div
+            key={rowIndex}
+            style={{
+              display: "flex",
+              marginBottom: 20,
+            }}
+          >
+            {row.map((image) => (
+              <div style={{ marginRight: 20 }}>
+                <ImageDisplay
+                  style={{
+                    height: 290,
+                    width: 290,
+                    borderRadius: 40,
+                    boxShadow: "1px 1px 10px 1px #864646",
+                  }}
+                  key={image.id}
+                  imageId={image.id}
+                />
+              </div>
+            ))}
+          </div>
+        ))}
+        {images.length === 0 && <p>No images available.</p>}
+      </div>
     </div>
   );
 }

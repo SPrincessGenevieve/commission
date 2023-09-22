@@ -1,3 +1,37 @@
-.aboout-container {
-  margin-top: 10rem;
+.about-container {
+  background-color: #ffe1e1;
+  height: 100vh;
+  display: flex;
+}
+
+.title-container {
+  display: flex;
+  position: absolute;
+  z-index: 1;
+}
+
+.about {
+  margin-top: 10px;
+  display: flex;
+  z-index: 1;
+}
+
+.paragraph-container {
+  display: flex;
+  width: 100%;
+  z-index: 1;
+}
+
+.img {
+  width: 100%;
+}
+
+.image-container {
+  display: flex;
+  position: absolute;
+  margin-top: 26.5rem;
+}
+
+.nav-bar-container {
+  z-index: 6;
 }

@@ -1,6 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
 import Navbar from "../../NavbarPublic";
 import axios from "axios";
+import "./../../components/font.css";
+import "./styles/about.css";
+import background from "./../../assets/background.png";
 
 function About(props) {
   const [data, setData] = useState([]);
@@ -29,15 +32,22 @@ function About(props) {
 
   return (
     <div>
-      <Navbar></Navbar>
+      <div className="nav-bar-container">
+        <Navbar></Navbar>
+      </div>
       <div className="about-container">
-        <h1>ABOUT US</h1>
+        <div className="title-container">
+          <h1 className="about">About Us</h1>
+        </div>
 
         {selectedData && (
-          <div>
+          <div className="paragraph-container">
             <p>{selectedData.description}</p>
           </div>
         )}
+        <div className="image-container">
+          <img className="img" src={background}></img>
+        </div>
       </div>
     </div>
   );
