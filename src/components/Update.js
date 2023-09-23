@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./../Navbar";
 import axios from "axios";
+import { Button } from "@mui/material";
+import "./styles/update.css";
+import { Edit, Save } from "@mui/icons-material";
 
 function Update(props) {
   const [data, setData] = useState([]);
   const [selectedData, setSelectedData] = useState(null);
   const [selectedId, setSelectedId] = useState(1); // Default ID to fetch, change as needed
   const [editedDescription, setEditedDescription] = useState("");
+  const [isEditing, setIsEditing] = useState(false); // State to track whether editing is enabled
 
   useEffect(() => {
     // Make an HTTP GET request to fetch the data
@@ -35,6 +39,10 @@ function Update(props) {
     setEditedDescription(text);
   };
 
+  const toggleEditing = () => {
+    setIsEditing(!isEditing);
+  };
+
   const handleSaveChanges = () => {
     // Make an HTTP PUT request to update the data
     axios
@@ -45,6 +53,7 @@ function Update(props) {
         // Update the selectedData with the updated description
         setSelectedData({ ...selectedData, description: editedDescription });
         console.log("Data updated successfully:", response.data);
+        toggleEditing(); // Toggle editing state back to disabled
       })
       .catch((error) => {
         console.error("Error updating data:", error);
@@ -53,35 +62,34 @@ function Update(props) {
 
   return (
     <div>
-        <Navbar></Navbar>
+      <Navbar></Navbar>
       <div className="about-container">
-        <h1>ABOUT US</h1>
-
-        {selectedData && (
-          <div
-            style={{
-              backgroundColor: "red",
-              width: "100%",
-              height: "200px", // Set a fixed height here
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <textarea
-              value={editedDescription}
-              onChange={handleDescriptionChange}
-              style={{
-                width: "100%",
-                height: "100%", // Set a fixed height here
-                border: "none",
-                resize: "none",
-                overflowY: "hidden", // Hide overflow
-              }}
-              maxLength={1000} // Set the maximum character length
-            ></textarea>
-            <button onClick={handleSaveChanges}>Save Changes</button>
+        <div className="about-subcontainer">
+          <div className="button-updatecontainer">
+            <Button
+              style={{ color: "#ad6c6b" }}
+              onClick={isEditing ? handleSaveChanges : toggleEditing}
+            >
+              <h1>ABOUT US</h1>
+              {isEditing ? <Save /> : <Edit />}
+            </Button>
           </div>
-        )}
+          <div className="body-container">
+            <div className="main-container">
+              {selectedData && (
+                <div className="input-container-about">
+                  <textarea
+                    className="textarea-update"
+                    value={editedDescription}
+                    onChange={handleDescriptionChange}
+                    disabled={!isEditing} // Disable the textarea based on editing state
+                    maxLength={1000} // Set the maximum character length
+                  ></textarea>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

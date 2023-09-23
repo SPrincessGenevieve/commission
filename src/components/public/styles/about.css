@@ -1,7 +1,5 @@
-.about-container {
-  background-color: #ffe1e1;
-  height: 100vh;
-  display: flex;
+.body-container {
+  margin-top: 7rem;
 }
 
 .title-container {
@@ -19,6 +17,8 @@
 .paragraph-container {
   display: flex;
   width: 100%;
+  margin-top: 25rem;
+  position: absolute;
   z-index: 1;
 }
 
