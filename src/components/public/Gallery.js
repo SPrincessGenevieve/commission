@@ -26,7 +26,7 @@ function Gallery() {
       <div className="gallery-container">
         <div className="gallery-subcontainer">
           <h1 className="welcome">Welcome to the Gallery</h1>
-          <div style={{ marginTop: "-8rem" }}>
+          <div style={{ marginTop: "1rem" }}>
             <GalleryContainer images={images} showButtons={false} />{" "}
           </div>
         </div>

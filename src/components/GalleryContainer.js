@@ -146,7 +146,7 @@ function GalleryContainer({
       {selectedImage && (
         <div
           style={{
-            height: 1000,
+            height: "40%",
             width: "100%",
             alignItems: "center",
             justifyContent: "center",
@@ -180,6 +180,7 @@ function GalleryContainer({
           alignItems: "center",
           justifyContent: "center",
           flexDirection: "column",
+          marginTop: "5%",
         }}
       >
         {groupImagesIntoRows().map((row, rowIndex) => (
