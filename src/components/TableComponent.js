@@ -174,7 +174,6 @@ function TableComponent() {
                 <TableCell className="table-cell fee">
                   {editable[item.ID] ? (
                     <>
-                      <p>$</p>
                       <input
                         className="input"
                         value={editedData[item.ID]?.FEE || item.FEE}

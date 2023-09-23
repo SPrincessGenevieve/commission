@@ -1,5 +1,5 @@
 .home-container {
-  background-color: #ffe1e1;
+  background: linear-gradient(to bottom, white, white);
   height: 100vh;
   display: flex;
 }
@@ -49,4 +49,18 @@
 
 img {
   width: 30%;
+}
+
+.link-container-home {
+  position: absolute;
+  display: flex;
+  margin-top: 45%;
+}
+
+.link {
+  text-decoration: none;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+  color: #8d5656;
 }
