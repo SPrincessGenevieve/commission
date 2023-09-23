@@ -9,7 +9,7 @@ function Add({ updateSelectedImageData }) {
       <Navbar></Navbar>
       <div className="list-container">
         <div className="list-subcontainer">
-          <div style={{ marginTop: "-5%" }}>
+          <div style={{}}>
             <GalleryContainer></GalleryContainer>
           </div>
         </div>

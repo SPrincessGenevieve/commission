@@ -125,7 +125,7 @@ function TableComponent() {
               <TableCell className="column-cell name">NAME</TableCell>
               <TableCell className="column-cell date">DATE</TableCell>
               <TableCell className="column-cell due">DUE</TableCell>
-              <TableCell className="column-cell fee">₱ FEE </TableCell>
+              <TableCell className="column-cell fee">FEE (₱)</TableCell>
               <TableCell className="column-cell contact">CONTACT NO</TableCell>
               <TableCell className="column-cell email">EMAIL</TableCell>
               <TableCell className="column-cell status">STATUS</TableCell>
