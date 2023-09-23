@@ -1,7 +1,15 @@
 import React from "react";
 import "./InputText.css";
 
-function InputText({ onChange, value, type, label, name, marginRight }) {
+function InputText({
+  onChange,
+  value,
+  type,
+  label,
+  name,
+  marginRight,
+  placeholder,
+}) {
   return (
     <>
       <div style={{ marginRight: marginRight }}>
@@ -23,6 +31,7 @@ function InputText({ onChange, value, type, label, name, marginRight }) {
           name={name}
           value={value}
           onChange={onChange}
+          placeholder={placeholder}
         />
       </div>
     </>

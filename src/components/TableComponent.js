@@ -125,7 +125,7 @@ function TableComponent() {
               <TableCell className="column-cell name">NAME</TableCell>
               <TableCell className="column-cell date">DATE</TableCell>
               <TableCell className="column-cell due">DUE</TableCell>
-              <TableCell className="column-cell fee">FEE</TableCell>
+              <TableCell className="column-cell fee">₱ FEE </TableCell>
               <TableCell className="column-cell contact">CONTACT NO</TableCell>
               <TableCell className="column-cell email">EMAIL</TableCell>
               <TableCell className="column-cell status">STATUS</TableCell>
@@ -173,11 +173,14 @@ function TableComponent() {
                 </TableCell>
                 <TableCell className="table-cell fee">
                   {editable[item.ID] ? (
-                    <input
-                      className="input"
-                      value={editedData[item.ID]?.FEE || item.FEE}
-                      onChange={(e) => handleInputChange(e, item, "FEE")}
-                    />
+                    <>
+                      <p>$</p>
+                      <input
+                        className="input"
+                        value={editedData[item.ID]?.FEE || item.FEE}
+                        onChange={(e) => handleInputChange(e, item, "FEE")}
+                      />
+                    </>
                   ) : (
                     <input className="input" value={item.FEE} disabled />
                   )}

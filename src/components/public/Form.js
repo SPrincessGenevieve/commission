@@ -31,12 +31,29 @@ function Form(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Check if any required field is empty
+    if (
+      !formData.NAME ||
+      !formData.DATE ||
+      !formData.DUE ||
+      !formData.FEE ||
+      !formData.CONTACT_NO ||
+      !formData.EMAIL ||
+      !formData.STATUS
+    ) {
+      // Display an alert message to inform the user
+      alert("Please fill out all fields");
+      return; // Do not proceed with form submission
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:8000/api/tasks/",
         formData
       );
       console.log("Response from Django API:", response.data);
+
+      // Clear the form data after successful submission
       setFormData({
         NAME: "",
         DATE: "",
