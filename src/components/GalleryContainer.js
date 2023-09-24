@@ -3,7 +3,7 @@ import axios from "axios";
 import { Button } from "@mui/material";
 import GalleryDis from "./public/GalleryDis";
 import ImageDisplay from "./public/ImageDisplay";
-import { Edit, Image, Upload } from "@mui/icons-material";
+import { Edit, Image, Upload, Delete } from "@mui/icons-material";
 
 function GalleryContainer({
   updateSelectedImageData,
@@ -16,21 +16,34 @@ function GalleryContainer({
 
   const fileInputRef = useRef();
 
+  const handleImageDelete = async (imageId) => {
+    try {
+      console.log("Deleting image with ID:", imageId);
+      await axios.delete(
+        `http://localhost:8000/api/upload/image/tasks/${imageId}/`
+      );
+
+      // Update the images state by removing the deleted image
+      setImages((prevImages) =>
+        prevImages.filter((image) => image.id !== imageId)
+      );
+    } catch (error) {
+      console.error("Error deleting image:", error);
+      console.log("Request URL:", error.config.url); // Log the request URL
+    }
+  };
+
   useEffect(() => {
-    // Try to fetch the selected image from localStorage
     const storedImage = localStorage.getItem("selectedImage");
 
     if (storedImage) {
-      // If there's a stored image, parse it and set it as the selected image
       setSelectedImage(JSON.parse(storedImage));
     } else {
-      // If no stored image, fetch the selected image from your Django backend
       fetchData();
     }
   }, []);
 
   useEffect(() => {
-    // Fetch all images from your Django backend
     axios
       .get("http://localhost:8000/api/all/images/tasks/")
       .then((response) => {
@@ -48,10 +61,8 @@ function GalleryContainer({
       );
       const selectedImageData = response.data;
 
-      // Update the selected image
       setSelectedImage(selectedImageData);
 
-      // Store the selected image data in localStorage
       localStorage.setItem("selectedImage", JSON.stringify(selectedImageData));
     } catch (error) {
       console.error("Error fetching selected image:", error);
@@ -81,10 +92,8 @@ function GalleryContainer({
 
       console.log(response.data.message);
 
-      // Update the selected image
       setSelectedImage(response.data);
 
-      // Store the selected image data in localStorage
       localStorage.setItem("selectedImage", JSON.stringify(response.data));
 
       if (
@@ -99,13 +108,11 @@ function GalleryContainer({
   };
 
   useEffect(() => {
-    // Fetch all images from your Django backend
     axios.get("http://localhost:8000/api/pictures/tasks/").then((response) => {
       setImages(response.data);
     });
   }, []);
 
-  // Define a function to group images into rows with a maximum of 5 images per row
   const groupImagesIntoRows = () => {
     const rows = [];
     for (let i = 0; i < images.length; i += 5) {
@@ -202,7 +209,18 @@ function GalleryContainer({
                   }}
                   key={image.id}
                   imageId={image.id}
+                  onClick={() => handleImageDelete(image.id)}
                 />
+                {showButtons && (
+                  // Add a delete button/icon for each image
+                  <Button
+                    style={{ marginTop: "-30%" }}
+                    startIcon={
+                      <Delete style={{ color: "red", fontSize: 30 }} />
+                    }
+                    onClick={() => handleImageDelete(image.id)}
+                  ></Button>
+                )}
               </div>
             ))}
           </div>
