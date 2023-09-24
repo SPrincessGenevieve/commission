@@ -20,10 +20,24 @@ function Form(props) {
     EMAIL: "",
     STATUS: "",
   });
+  const [emailError, setEmailError] = useState("");
 
   // Function to handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    // Validate email input
+    if (name === "EMAIL") {
+      // Regular expression for email validation
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+      if (!emailPattern.test(value)) {
+        setEmailError("Please enter a valid email address");
+      } else {
+        setEmailError(""); // Clear the error message if email is valid
+      }
+    }
+
     setFormData({ ...formData, [name]: value });
   };
 
