@@ -118,7 +118,7 @@
 
 .column-cell.action {
   font-weight: bold;
-  color: red;
+  color: #ff0000;
 }
 
 .pagination {
@@ -134,4 +134,10 @@
 
 .label-page {
   margin-top: 40%;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

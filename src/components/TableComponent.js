@@ -17,10 +17,11 @@ import {
   Check,
   Close,
   Delete,
+  Download,
   Edit,
 } from "@mui/icons-material";
 import axios from "axios";
-import InputText from "./InputText";
+import * as XLSX from "xlsx";
 
 function TableComponent() {
   const [data, setData] = useState([]);
@@ -33,6 +34,50 @@ function TableComponent() {
   const endIndex = startIndex + rowsPerPage;
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
+
+  const exportToExcel = () => {
+    const exportData = filteredData.map((item) => ({
+      ID: item.ID,
+      NAME: item.NAME,
+      DATE: item.DATE,
+      DUE: item.DUE,
+      FEE: item.FEE,
+      CONTACT_NO: item.CONTACT_NO,
+      EMAIL: item.EMAIL,
+      STATUS: item.STATUS,
+    }));
+
+    // Create a new workbook
+    const workbook = XLSX.utils.book_new();
+
+    // Create a new worksheet with your data
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+
+    // Add the worksheet to the workbook
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Table Data");
+
+    // Generate a data URI for the Excel file
+    const excelDataURI = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "base64",
+    });
+
+    // Create a data URI for downloading
+    const dataUri = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${excelDataURI}`;
+
+    // Create a link element for downloading
+    const a = document.createElement("a");
+    a.href = dataUri;
+    a.download = "table_data.xlsx";
+    a.style.display = "none";
+
+    // Append the link element to the document and trigger the download
+    document.body.appendChild(a);
+    a.click();
+
+    // Clean up
+    document.body.removeChild(a);
+  };
 
   const nextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
@@ -177,7 +222,16 @@ function TableComponent() {
             onChange={handleSearchChange}
             placeholder="search name"
           />
+          <div style={{ marginLeft: "73.5%" }}>
+            <Button
+              onClick={exportToExcel}
+              style={{ backgroundColor: "#793c3c", color: "white" }}
+            >
+              <Download></Download>DOWNLOAD EXCEL
+            </Button>
+          </div>
         </div>
+
         <TableContainer>
           <Table className="table">
             <TableHead>

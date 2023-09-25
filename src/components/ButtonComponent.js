@@ -2,7 +2,7 @@ import React from "react";
 import "./../components/public/styles/home.css";
 import { Button } from "@mui/material";
 
-function ButtonComponent({ onClick, text, backgroundColor, zIndex }) {
+function ButtonComponent({ color, onClick, text, backgroundColor, zIndex }) {
   return (
     <div>
       <Button
@@ -10,7 +10,8 @@ function ButtonComponent({ onClick, text, backgroundColor, zIndex }) {
           backgroundColor: backgroundColor,
           borderRadius: 7,
           width: "23.5rem",
-          zIndex: zIndex
+          zIndex: zIndex,
+          color: color
         }}
         onClick={onClick}
         className="button-book"
