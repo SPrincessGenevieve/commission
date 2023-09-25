@@ -7,6 +7,7 @@ import InputText from "../InputText";
 import ButtonComponent from "../ButtonComponent";
 import cloud from "./../../assets/cloud.png";
 import InputSelect from "../InputSelect";
+import TermsConsitions from "./TermsConsitions";
 
 function Form(props) {
   // Create state variables to hold form data
@@ -21,6 +22,7 @@ function Form(props) {
     STATUS: "",
   });
   const [emailError, setEmailError] = useState("");
+  const [terms, setTerms] = useState(false);
 
   // Function to handle form input changes
   const handleInputChange = (e) => {
@@ -39,6 +41,25 @@ function Form(props) {
     }
 
     setFormData({ ...formData, [name]: value });
+  };
+
+  const checkFormCompletion = () => {
+    // Check if all required fields are filled to enable the terms section
+    if (
+      !formData.NAME ||
+      !formData.DATE ||
+      !formData.DUE ||
+      !formData.FEE ||
+      !formData.CONTACT_NO ||
+      !formData.EMAIL ||
+      !formData.STATUS
+    ) {
+      // Display an alert message to inform the user
+      alert("Please fill out all fields");
+      return; // Do not proceed with form submission
+    } else {
+      setTerms(!terms);
+    }
   };
 
   // Function to handle form submission
@@ -89,11 +110,22 @@ function Form(props) {
         console.error("Error setting up the request:", error.message);
       }
     }
+
+    setTerms(!terms);
   };
 
   return (
     <div>
       <Navbar />
+      {terms ? (
+        <div className="sub-form">
+          <TermsConsitions
+            cancel={() => setTerms(!terms)}
+            proceed={handleSubmit}
+          ></TermsConsitions>
+        </div>
+      ) : null}
+
       <div className="form-container">
         <div className="form-subcontainer">
           <div className="white-container">
@@ -166,7 +198,7 @@ function Form(props) {
             <div className="buttons-container">
               <ButtonComponent
                 text="SUBMIT"
-                onClick={handleSubmit}
+                onClick={checkFormCompletion}
                 backgroundColor={"#FFECEC"}
               ></ButtonComponent>
             </div>

@@ -32,6 +32,7 @@ function InputText({
           value={value}
           onChange={onChange}
           placeholder={placeholder}
+          required
         />
       </div>
     </>

@@ -55,6 +55,8 @@ img {
   position: absolute;
   display: flex;
   margin-top: 45%;
+  align-items: center;
+  justify-content: center;
 }
 
 .link {

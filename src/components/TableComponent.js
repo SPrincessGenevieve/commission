@@ -20,6 +20,7 @@ import {
   Edit,
 } from "@mui/icons-material";
 import axios from "axios";
+import InputText from "./InputText";
 
 function TableComponent() {
   const [data, setData] = useState([]);
@@ -30,6 +31,8 @@ function TableComponent() {
   const [currentPage, setCurrentPage] = useState(1); // Current page
   const startIndex = (currentPage - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
 
   const nextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
@@ -42,6 +45,23 @@ function TableComponent() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    // Update filteredData whenever the data or searchQuery changes
+    filterData();
+  }, [data, searchQuery]);
+
+  const filterData = () => {
+    // Filter the data based on the searchQuery
+    const filtered = data.filter((item) =>
+      item.NAME.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredData(filtered);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   const fetchData = () => {
     // Use Axios to fetch data from your Django backend
@@ -137,6 +157,27 @@ function TableComponent() {
   return (
     <div>
       <div className="table-container">
+        <div className="search-container">
+          <input
+            style={{
+              outline: "none",
+              border: "1px solid red",
+              width: 300,
+              height: 50,
+              borderRadius: 15,
+              paddingLeft: 20,
+              fontSize: 20,
+              marginBottom: 20,
+              backgroundColor: "transparent",
+              color: "red",
+            }}
+            label="Search by Name"
+            variant="outlined"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            placeholder="search name"
+          />
+        </div>
         <TableContainer>
           <Table className="table">
             <TableHead>
@@ -155,7 +196,7 @@ function TableComponent() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.slice(startIndex, endIndex).map((item) => (
+              {filteredData.slice(startIndex, endIndex).map((item) => (
                 <TableRow className="table-body-row" key={item.ID}>
                   <TableCell className="table-cell id">
                     <input className="input" value={item.ID} disabled />
