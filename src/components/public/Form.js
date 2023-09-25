@@ -165,7 +165,7 @@ function Form(props) {
                     onChange={handleInputChange}
                   ></InputText>
                 </div>
-                <div className="input-boxes">
+                <div className="input-boxes contact">
                   <InputText
                     label={"CONTACT"}
                     marginRight={50}

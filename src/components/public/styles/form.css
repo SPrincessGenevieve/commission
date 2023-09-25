@@ -42,3 +42,10 @@
   align-items: center;
   justify-content: center;
 }
+
+.input-boxes.contact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6%;
+}
