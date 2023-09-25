@@ -143,7 +143,7 @@ function Form(props) {
                   <InputText
                     label={"DATE TODAY"}
                     type="date"
-                    name="DATE TODAY"
+                    name="DATE"
                     value={formData.DATE}
                     onChange={handleInputChange}
                   ></InputText>
@@ -183,7 +183,7 @@ function Form(props) {
                     onChange={handleInputChange}
                   ></InputText>
                 </div>
-                <div className="input-boxes">
+                <div className="input-boxes status">
                   <InputSelect
                     label={"STATUS"}
                     type="select"

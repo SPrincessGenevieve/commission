@@ -49,3 +49,10 @@
   justify-content: center;
   margin-left: 6%;
 }
+
+.input-boxes.status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6%;
+}
