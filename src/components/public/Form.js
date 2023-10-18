@@ -8,9 +8,10 @@ import ButtonComponent from "../ButtonComponent";
 import cloud from "./../../assets/cloud.png";
 import InputSelect from "../InputSelect";
 import TermsConsitions from "./TermsConsitions";
+import mailjet from "node-mailjet";
 
 function Form(props) {
-  // Create state variables to hold form data
+
   const [formData, setFormData] = useState({
     ID: "",
     NAME: "",
